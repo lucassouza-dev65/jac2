@@ -371,7 +371,7 @@
 
   /* ========== SEÇÃO PROBLEMA ========== */
   .section {
-    padding: 120px 0;
+    padding: 72px 0;
     position: relative;
   }
 
@@ -419,24 +419,40 @@
   .section-dark .section-sub { color: var(--text-muted); }
 
   /* Pain points */
-  .pain-list {
+  /* Pain carousel */
+  .pain-carousel {
     max-width: 800px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
+    margin: 32px auto 0;
+    position: relative;
+  }
+  .pain-track {
+    position: relative;
+    overflow: hidden;
   }
   .pain-item {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: 28px;
-    padding: 32px 0;
-    border-bottom: 1px solid rgba(15, 34, 56, 0.1);
-    transition: padding 0.3s ease;
+    padding: 36px 0;
+    border-top: 1px solid rgba(15, 34, 56, 0.12);
+    border-bottom: 1px solid rgba(15, 34, 56, 0.12);
+    opacity: 0;
+    transform: translateX(32px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    pointer-events: none;
   }
-  .pain-item:hover { padding-left: 12px; }
-  .pain-item:last-child { border-bottom: none; }
-
+  .pain-item.active {
+    opacity: 1;
+    transform: translateX(0);
+    position: relative;
+    pointer-events: auto;
+  }
+  .pain-item.exit {
+    opacity: 0;
+    transform: translateX(-32px);
+  }
   .pain-num {
     font-family: 'Cormorant Garamond', serif;
     font-size: 38px;
@@ -447,14 +463,48 @@
     min-width: 60px;
     border-right: 1px solid var(--line-strong);
     padding-right: 28px;
+    flex-shrink: 0;
   }
-
   .pain-text {
     font-family: 'Cormorant Garamond', serif;
     font-size: 24px;
     font-weight: 500;
     color: var(--navy-deep);
     line-height: 1.35;
+  }
+  /* Dots */
+  .pain-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+  }
+  .pain-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: rgba(15, 34, 56, 0.2);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+  }
+  .pain-dot.active {
+    background: var(--gold-deep);
+    transform: scale(1.4);
+  }
+  /* Progress bar */
+  .pain-progress {
+    height: 2px;
+    background: rgba(15, 34, 56, 0.08);
+    margin-top: 12px;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .pain-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold-deep), var(--gold));
+    width: 0%;
+    transition: width linear;
   }
 
   /* ========== APRESENTAÇÃO DO CURSO ========== */
@@ -1320,7 +1370,7 @@
   @media (max-width: 768px) {
     * { box-sizing: border-box; }
     .container { padding: 0 18px; }
-    .section { padding: 80px 0; }
+    .section { padding: 48px 0; }
 
     /* HERO: fluxo normal, sem flex tricks */
     .hero {
@@ -1403,7 +1453,7 @@
     .hero-stats { display: none; }
 
     /* RESTO DO SITE */
-    .pain-item { gap: 16px; padding: 24px 0; }
+    .pain-item { gap: 16px; padding: 28px 0; }
     .pain-num { font-size: 28px; min-width: 40px; padding-right: 16px; }
     .pain-text { font-size: 19px; }
     .cert-badge { padding: 32px 24px; }
@@ -1582,22 +1632,31 @@
       <span class="divider-line"></span>
     </div>
 
-    <div class="pain-list" style="margin-top: 64px;">
-      <div class="pain-item">
-        <div class="pain-num">01</div>
-        <div class="pain-text">"Qual diagnóstico estou considerando neste caso?"</div>
+    <div class="pain-carousel">
+      <div class="pain-track">
+        <div class="pain-item active">
+          <div class="pain-num">01</div>
+          <div class="pain-text">"Qual diagnóstico estou considerando neste caso?"</div>
+        </div>
+        <div class="pain-item">
+          <div class="pain-num">02</div>
+          <div class="pain-text">"O que é prioridade no tratamento?"</div>
+        </div>
+        <div class="pain-item">
+          <div class="pain-num">03</div>
+          <div class="pain-text">"Qual intervenção devo usar agora?"</div>
+        </div>
+        <div class="pain-item">
+          <div class="pain-num">04</div>
+          <div class="pain-text">"Como diferenciar transtornos que parecem muito semelhantes?"</div>
+        </div>
       </div>
-      <div class="pain-item">
-        <div class="pain-num">02</div>
-        <div class="pain-text">"O que é prioridade no tratamento?"</div>
-      </div>
-      <div class="pain-item">
-        <div class="pain-num">03</div>
-        <div class="pain-text">"Qual intervenção devo usar agora?"</div>
-      </div>
-      <div class="pain-item">
-        <div class="pain-num">04</div>
-        <div class="pain-text">"Como diferenciar transtornos que parecem muito semelhantes?"</div>
+      <div class="pain-progress"><div class="pain-progress-bar" id="painProgress"></div></div>
+      <div class="pain-dots">
+        <button class="pain-dot active" data-idx="0"></button>
+        <button class="pain-dot" data-idx="1"></button>
+        <button class="pain-dot" data-idx="2"></button>
+        <button class="pain-dot" data-idx="3"></button>
       </div>
     </div>
   </div>
@@ -1981,6 +2040,58 @@
       }
     }, { threshold: 0.1 });
     observer.observe(target);
+  })();
+
+  // Pain carousel
+  (function() {
+    var items = document.querySelectorAll('.pain-item');
+    var dots  = document.querySelectorAll('.pain-dot');
+    var bar   = document.getElementById('painProgress');
+    var current = 0;
+    var total   = items.length;
+    var interval = 2800;
+    var timer, barTimer;
+
+    function goTo(idx) {
+      items[current].classList.remove('active');
+      items[current].classList.add('exit');
+      setTimeout(function() { items[current].classList.remove('exit'); }, 550);
+      dots[current].classList.remove('active');
+      current = idx;
+      items[current].classList.add('active');
+      dots[current].classList.add('active');
+      startBar();
+    }
+
+    function next() { goTo((current + 1) % total); }
+
+    function startBar() {
+      bar.style.transition = 'none';
+      bar.style.width = '0%';
+      requestAnimationFrame(function() {
+        requestAnimationFrame(function() {
+          bar.style.transition = 'width ' + interval + 'ms linear';
+          bar.style.width = '100%';
+        });
+      });
+    }
+
+    function startAuto() {
+      clearInterval(timer);
+      timer = setInterval(next, interval);
+    }
+
+    dots.forEach(function(dot) {
+      dot.addEventListener('click', function() {
+        var idx = parseInt(dot.getAttribute('data-idx'));
+        clearInterval(timer);
+        goTo(idx);
+        startAuto();
+      });
+    });
+
+    startBar();
+    startAuto();
   })();
 
   // FAQ toggle
