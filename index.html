@@ -1184,21 +1184,29 @@
   /* ========== WHATSAPP FLOAT ========== */
   .wa-float {
     position: fixed;
-    bottom: 24px; right: 24px;
-    width: 60px; height: 60px;
+    bottom: 20px; right: 20px;
+    width: 48px; height: 48px;
     background: #16b93a;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
-    font-size: 28px;
+    font-size: 22px;
     text-decoration: none;
-    box-shadow: 0 6px 24px rgba(22, 185, 58, 0.4);
+    box-shadow: 0 4px 18px rgba(22, 185, 58, 0.4);
     z-index: 100;
-    transition: transform 0.3s;
+    opacity: 0;
+    transform: scale(0.7) translateY(10px);
+    pointer-events: none;
+    transition: opacity 0.4s ease, transform 0.4s ease;
   }
-  .wa-float:hover { transform: scale(1.1); }
+  .wa-float.wa-visible {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    pointer-events: auto;
+  }
+  .wa-float:hover { transform: scale(1.08); }
 
   /* ========== RESPONSIVE ========== */
   @media (max-width: 900px) {
@@ -1820,6 +1828,20 @@
 </a>
 
 <script>
+  // WhatsApp: aparece após 5s OU no primeiro scroll
+  (function() {
+    var wa = document.querySelector('.wa-float');
+    var shown = false;
+    function showWa() {
+      if (shown) return;
+      shown = true;
+      wa.classList.add('wa-visible');
+      window.removeEventListener('scroll', showWa);
+    }
+    setTimeout(showWa, 5000);
+    window.addEventListener('scroll', showWa, { passive: true });
+  })();
+
   // FAQ toggle
   document.querySelectorAll('.faq-question').forEach(btn => {
     btn.addEventListener('click', () => {
