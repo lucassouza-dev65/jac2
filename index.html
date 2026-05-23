@@ -1828,18 +1828,18 @@
 </a>
 
 <script>
-  // WhatsApp: aparece após 5s OU no primeiro scroll
+  // WhatsApp: aparece quando a seção #oferta entra na tela
   (function() {
     var wa = document.querySelector('.wa-float');
-    var shown = false;
-    function showWa() {
-      if (shown) return;
-      shown = true;
-      wa.classList.add('wa-visible');
-      window.removeEventListener('scroll', showWa);
-    }
-    setTimeout(showWa, 5000);
-    window.addEventListener('scroll', showWa, { passive: true });
+    var target = document.getElementById('oferta');
+    if (!wa || !target) return;
+    var observer = new IntersectionObserver(function(entries) {
+      if (entries[0].isIntersecting) {
+        wa.classList.add('wa-visible');
+        observer.disconnect();
+      }
+    }, { threshold: 0.1 });
+    observer.observe(target);
   })();
 
   // FAQ toggle
