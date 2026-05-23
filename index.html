@@ -1208,6 +1208,103 @@
   }
   .wa-float:hover { transform: scale(1.08); }
 
+
+  /* ========== SEPARADOR DE CREDENCIAIS ========== */
+  .credentials-bar {
+    background: var(--navy-mid);
+    border-top: 1px solid var(--line-strong);
+    border-bottom: 1px solid var(--line-strong);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .credentials-bar::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 200% at 50% 50%, rgba(201, 163, 92, 0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .credentials-inner {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+  }
+  .credential-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 28px 40px;
+    flex: 1;
+    border-right: 1px solid var(--line);
+    position: relative;
+    transition: background 0.3s ease;
+  }
+  .credential-item:last-child { border-right: none; }
+  .credential-item:hover {
+    background: rgba(201, 163, 92, 0.04);
+  }
+  .credential-icon {
+    font-size: 22px;
+    color: var(--gold);
+    flex-shrink: 0;
+    width: 28px;
+    text-align: center;
+  }
+  .credential-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .credential-value {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--cream);
+    letter-spacing: 0.08em;
+    line-height: 1.2;
+  }
+  .credential-label {
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 400;
+    line-height: 1.2;
+  }
+
+  @media (max-width: 768px) {
+    .credentials-inner {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .credential-item {
+      flex: 0 0 50%;
+      padding: 10px 14px;
+      border-right: none;
+      border-bottom: 1px solid var(--line);
+      gap: 8px;
+      align-items: center;
+    }
+    .credential-item:nth-child(odd) {
+      border-right: 1px solid var(--line);
+    }
+    .credential-item:last-child {
+      flex: 0 0 100%;
+      justify-content: center;
+      border-right: none;
+      border-bottom: none;
+    }
+    .credential-item:nth-child(3),
+    .credential-item:nth-child(4) {
+      border-bottom: 1px solid var(--line);
+    }
+    .credential-icon { font-size: 16px; width: 20px; }
+    .credential-value { font-size: 11px; letter-spacing: 0.04em; }
+    .credential-label { font-size: 9px; }
+  }
+
   /* ========== RESPONSIVE ========== */
   @media (max-width: 900px) {
     .hero-grid {
@@ -1429,6 +1526,50 @@
     </div>
   </div>
 </section>
+
+
+<!-- ========== CREDENCIAIS ========== -->
+<div class="credentials-bar">
+  <div class="container" style="padding: 0;">
+    <div class="credentials-inner">
+      <div class="credential-item">
+        <span class="credential-icon"><i class="fa-solid fa-globe"></i></span>
+        <div class="credential-text">
+          <span class="credential-value">100% Online</span>
+          <span class="credential-label">acesse de qualquer lugar</span>
+        </div>
+      </div>
+      <div class="credential-item">
+        <span class="credential-icon"><i class="fa-solid fa-calendar-days"></i></span>
+        <div class="credential-text">
+          <span class="credential-value">18 Meses</span>
+          <span class="credential-label">de acesso ao conteúdo</span>
+        </div>
+      </div>
+      <div class="credential-item">
+        <span class="credential-icon"><i class="fa-solid fa-users"></i></span>
+        <div class="credential-text">
+          <span class="credential-value">+3.000 Alunos</span>
+          <span class="credential-label">já capacitados</span>
+        </div>
+      </div>
+      <div class="credential-item">
+        <span class="credential-icon"><i class="fa-solid fa-graduation-cap"></i></span>
+        <div class="credential-text">
+          <span class="credential-value">Certificação MEC</span>
+          <span class="credential-label">reconhecida pelo MEC</span>
+        </div>
+      </div>
+      <div class="credential-item">
+        <span class="credential-icon"><i class="fa-solid fa-video"></i></span>
+        <div class="credential-text">
+          <span class="credential-value">6 Encontros ao Vivo</span>
+          <span class="credential-label">3 supervisões + 3 lives tira-dúvidas</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- ========== PROBLEMA ========== -->
 <section class="section section-light">
