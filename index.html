@@ -452,6 +452,7 @@
   .pain-item.exit {
     opacity: 0;
     transform: translateX(-32px);
+    position: absolute;
   }
   .pain-num {
     font-family: 'Cormorant Garamond', serif;
@@ -1469,6 +1470,7 @@
   }
   .testi-track {
     position: relative;
+    overflow: hidden;
   }
   .testi-slide {
     opacity: 0;
@@ -1490,6 +1492,7 @@
     opacity: 0;
     transform: translateX(-28px);
     visibility: hidden;
+    position: absolute;
   }
   .testi-card {
     background: var(--paper);
@@ -2992,10 +2995,31 @@
     var items = document.querySelectorAll('.pain-item');
     var dots  = document.querySelectorAll('.pain-dot');
     var bar   = document.getElementById('painProgress');
+    var painTrack = document.querySelector('.pain-track');
     var current = 0;
     var total   = items.length;
     var interval = 5000;
     var timer, barTimer;
+
+    // Lock track height to tallest item to prevent layout shift
+    function lockHeight() {
+      items.forEach(function(s) {
+        s.style.position = 'relative';
+        s.style.visibility = 'visible';
+        s.style.opacity = '0';
+      });
+      var maxH = 0;
+      items.forEach(function(s) { maxH = Math.max(maxH, s.offsetHeight); });
+      items.forEach(function(s) {
+        s.style.position = '';
+        s.style.visibility = '';
+        s.style.opacity = '';
+      });
+      if (painTrack && maxH > 0) painTrack.style.minHeight = maxH + 'px';
+    }
+
+    lockHeight();
+    window.addEventListener('resize', lockHeight);
 
     function goTo(idx) {
       items[current].classList.remove('active');
@@ -3133,11 +3157,34 @@
     var slides  = document.querySelectorAll('.testi-slide');
     var dots    = document.querySelectorAll('#testiDots .testi-dot');
     var bar     = document.getElementById('testiProgress');
+    var track   = document.getElementById('testiTrack');
     if (!slides.length || !bar) return;
     var current  = 0;
     var total    = slides.length;
     var interval = 10000;
     var timer;
+
+    // Fix height to tallest slide to prevent layout shift
+    function lockHeight() {
+      // Make all slides temporarily visible to measure
+      slides.forEach(function(s) {
+        s.style.position = 'relative';
+        s.style.visibility = 'visible';
+        s.style.opacity = '0';
+      });
+      var maxH = 0;
+      slides.forEach(function(s) { maxH = Math.max(maxH, s.offsetHeight); });
+      // Restore original positioning
+      slides.forEach(function(s) {
+        s.style.position = '';
+        s.style.visibility = '';
+        s.style.opacity = '';
+      });
+      if (track && maxH > 0) track.style.minHeight = maxH + 'px';
+    }
+
+    lockHeight();
+    window.addEventListener('resize', lockHeight);
 
     function goTo(idx) {
       slides[current].classList.remove('active');
@@ -3165,7 +3212,6 @@
     });
     // swipe
     var tx = 0;
-    var track = document.getElementById('testiTrack');
     if (track) {
       track.addEventListener('touchstart', function(e){ tx = e.touches[0].clientX; }, { passive: true });
       track.addEventListener('touchend', function(e){
