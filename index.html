@@ -1008,24 +1008,30 @@
   /* Faixa bege no header da seção de módulos */
   .modules-header-band {
     background: var(--paper);
-    padding: 56px 0 48px;
-    margin-bottom: 48px;
+    padding: 56px 0 24px;
+    margin-bottom: 24px;
   }
   .modules-header-band .section-title em { color: var(--gold-deep); }
+  .modules-header-band .section-sub { margin-bottom: 0; }
   /* ========== COMO FUNCIONA ========== */
   .features-list {
-    max-width: 900px;
+    max-width: 1100px;
     margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 48px;
   }
   .feature-row {
     display: grid;
     grid-template-columns: 80px 1fr;
     gap: 32px;
     align-items: center;
-    padding: 32px 0;
+    padding: 28px 0;
     border-bottom: 1px solid rgba(15, 34, 56, 0.08);
   }
   .feature-row:last-child { border-bottom: none; }
+  .feature-row:nth-last-child(2) { border-bottom: none; }
+  .feature-row:last-child { grid-column: 1 / -1; max-width: 560px; margin: 0 auto; width: 100%; }
 
   .feature-icon {
     width: 64px; height: 64px;
@@ -1766,8 +1772,13 @@
     .module-card { padding: 36px 28px; }
     .module-card.extra { padding: 36px 28px; }
     .feature-row { grid-template-columns: 60px 1fr; gap: 20px; padding: 24px 0; }
+    .feature-row:nth-last-child(2) { border-bottom: 1px solid rgba(15, 34, 56, 0.08); }
+    .features-list { grid-template-columns: 1fr; gap: 0; }
     .feature-icon { width: 56px; height: 56px; }
     .feature-text { font-size: 18px; }
+    .modules-header-band { padding: 40px 0 28px; margin-bottom: 16px; }
+    .guests-track { min-height: 420px; }
+    .guest-slide { min-height: 420px; }
     .mentor-block { grid-template-columns: 1fr; gap: 48px; }
     .mentor-name { font-size: 42px; }
     .offer-block { padding: 48px 28px; }
