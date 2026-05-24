@@ -531,60 +531,204 @@
     font-weight: 500;
   }
 
-  /* Selo de certificação */
-  .cert-badge {
-    max-width: 700px;
-    margin: 80px auto 0;
-    padding: 48px 56px;
-    border: 1px solid var(--line-strong);
-    background:
-      linear-gradient(135deg, rgba(201, 163, 92, 0.05) 0%, transparent 50%, rgba(201, 163, 92, 0.05) 100%);
-    position: relative;
-    text-align: center;
-  }
-  .cert-badge::before,
-  .cert-badge::after {
-    content: '';
-    position: absolute;
-    width: 20px; height: 20px;
-    border: 1px solid var(--gold);
-  }
-  .cert-badge::before {
-    top: -1px; left: -1px;
-    border-right: none; border-bottom: none;
-  }
-  .cert-badge::after {
-    bottom: -1px; right: -1px;
-    border-left: none; border-top: none;
+  /* ========== SEÇÃO APRESENTAÇÃO ========== */
+  .apresentacao-grid {
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    gap: 80px;
+    align-items: center;
+    margin-top: 64px;
   }
 
-  .cert-label {
-    font-size: 11px;
-    letter-spacing: 0.4em;
-    text-transform: uppercase;
+  /* Logo GPS - moldura */
+  .gps-logo-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .gps-logo-frame {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .gps-logo-frame::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 1px solid var(--line-strong);
+    border-radius: 4px;
+  }
+  .gps-logo-frame::after {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    border: 1px solid var(--line);
+    border-radius: 2px;
+  }
+  /* cantos dourados */
+  .gps-logo-corner {
+    position: absolute;
+    width: 24px; height: 24px;
+    border-color: var(--gold);
+    border-style: solid;
+  }
+  .gps-logo-corner.tl { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+  .gps-logo-corner.tr { top: -1px; right: -1px; border-width: 2px 2px 0 0; }
+  .gps-logo-corner.bl { bottom: -1px; left: -1px; border-width: 0 0 2px 2px; }
+  .gps-logo-corner.br { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+  .gps-logo-img {
+    width: 240px;
+    height: 240px;
+    object-fit: contain;
+    position: relative;
+    z-index: 1;
+    filter: drop-shadow(0 8px 32px rgba(201, 163, 92, 0.2));
+  }
+  .gps-logo-halo {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 70% at 50% 50%, rgba(201,163,92,0.08) 0%, transparent 70%);
+    border-radius: 4px;
+    z-index: 0;
+  }
+
+  /* Texto lado direito */
+  .apresentacao-text {}
+
+  /* Reveal animado */
+  .reveal-word {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: bottom;
+  }
+  .reveal-word span {
+    display: inline-block;
+    transform: translateY(110%);
+    opacity: 0;
+    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s ease;
+    transition-delay: inherit;
+  }
+  .section-revealed .reveal-word span {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .apresentacao-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(34px, 3.5vw, 52px);
+    font-weight: 500;
+    line-height: 1.1;
+    color: var(--paper);
+    margin-bottom: 28px;
+    letter-spacing: -0.01em;
+  }
+  .apresentacao-title em {
+    font-style: italic;
     color: var(--gold);
+  }
+
+  .apresentacao-body {
+    font-size: 18px;
+    line-height: 1.75;
+    color: var(--text-muted);
+    font-weight: 300;
     margin-bottom: 16px;
   }
-  .cert-title {
+  .apresentacao-body strong { color: var(--gold); font-weight: 500; }
+
+  /* ── CERTIFICADO ── */
+  .certificado {
+    margin-top: 56px;
+    max-width: 680px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .certificado-doc {
+    background: rgba(201, 163, 92, 0.06);
+    border: 1px solid var(--gold);
+    border-left: 4px solid var(--gold);
+    padding: 32px 40px;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+  .cert-icon {
+    font-size: 40px;
+    color: var(--gold);
+    flex-shrink: 0;
+    opacity: 0.85;
+  }
+  .cert-body { flex: 1; }
+  .cert-course-type {
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold-deep);
+    margin-bottom: 6px;
+  }
+  .cert-course-name {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 38px;
+    font-size: 26px;
     font-weight: 500;
     color: var(--paper);
-    margin-bottom: 8px;
+    line-height: 1.2;
+    margin-bottom: 4px;
   }
-  .cert-hours {
-    font-family: 'Cinzel', serif;
-    font-size: 14px;
-    letter-spacing: 0.3em;
-    color: var(--gold);
-    margin-bottom: 24px;
-  }
-  .cert-desc {
-    font-size: 15px;
+  .cert-course-name em { color: var(--gold); font-style: italic; }
+  .cert-course-sub {
+    font-size: 13px;
     color: var(--text-dim);
-    max-width: 480px;
-    margin: 0 auto;
-    line-height: 1.6;
+    line-height: 1.5;
+  }
+  .cert-badge-pill {
+    flex-shrink: 0;
+    text-align: center;
+    border: 1px solid var(--line-strong);
+    padding: 12px 20px;
+  }
+  .cert-badge-num {
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+    display: block;
+  }
+  .cert-badge-label {
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    display: block;
+    margin-top: 4px;
+  }
+
+  @media (max-width: 768px) {
+    .certificado-doc {
+      flex-direction: column;
+      gap: 20px;
+      padding: 24px 20px;
+      text-align: center;
+      border-left: 1px solid var(--gold);
+      border-top: 4px solid var(--gold);
+    }
+    .cert-icon { font-size: 32px; }
+    .cert-course-name { font-size: 22px; }
+  }
+
+  @media (max-width: 768px) {
+    .apresentacao-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+      margin-top: 40px;
+    }
+    .gps-logo-frame { width: 220px; height: 220px; }
+    .gps-logo-img { width: 170px; height: 170px; }
+
   }
 
   /* ========== MÓDULOS ========== */
@@ -1663,21 +1807,49 @@
 </section>
 
 <!-- ========== APRESENTAÇÃO ========== -->
-<section class="section section-dark">
+<section class="section section-dark" id="apresentacao">
   <div class="container">
     <div class="section-eyebrow">Apresentamos</div>
-    <h2 class="section-title">O <em>GPS</em> foi criado exatamente para resolver esse problema</h2>
 
-    <div class="course-intro" style="margin-top: 48px;">
-      <p>O <strong>GPS — Guia do Psicólogo Seguro</strong> é um curso de extensão universitária de <strong>130 horas</strong> que ensina, de forma prática e estruturada, como diagnosticar e tratar os transtornos mais comuns da clínica moderna.</p>
-      <p>Foi pensado para psicólogos que querem sair do lugar comum, ganhar segurança e oferecer atendimentos verdadeiramente baseados em evidências.</p>
+    <div class="apresentacao-grid">
+      <!-- Logo GPS -->
+      <div class="gps-logo-wrap">
+        <div class="gps-logo-frame">
+          <div class="gps-logo-halo"></div>
+          <span class="gps-logo-corner tl"></span>
+          <span class="gps-logo-corner tr"></span>
+          <span class="gps-logo-corner bl"></span>
+          <span class="gps-logo-corner br"></span>
+          <img src="gps-logo.png" alt="GPS — Guia do Psicólogo Seguro" class="gps-logo-img">
+        </div>
+      </div>
+
+      <!-- Texto -->
+      <div class="apresentacao-text" id="apresentacaoReveal">
+        <h2 class="apresentacao-title">
+          <span class="reveal-word"><span>O&nbsp;</span></span><span class="reveal-word"><span><em>GPS</em>&nbsp;</span></span><span class="reveal-word"><span>foi&nbsp;</span></span><span class="reveal-word"><span>criado</span></span><br>
+          <span class="reveal-word" style="transition-delay:0.08s"><span>exatamente&nbsp;</span></span><span class="reveal-word" style="transition-delay:0.14s"><span>para&nbsp;</span></span><span class="reveal-word" style="transition-delay:0.2s"><span>resolver</span></span><br>
+          <span class="reveal-word" style="transition-delay:0.26s"><span>esse&nbsp;</span></span><span class="reveal-word" style="transition-delay:0.32s"><span><em>problema</em></span></span>
+        </h2>
+        <p class="apresentacao-body">O <strong>GPS — Guia do Psicólogo Seguro</strong> é um curso de extensão universitária de <strong>130 horas</strong> que ensina, de forma prática e estruturada, como diagnosticar e tratar os transtornos mais comuns da clínica moderna.</p>
+        <p class="apresentacao-body">Foi pensado para psicólogos que querem sair do lugar comum, ganhar segurança e oferecer atendimentos verdadeiramente <strong>baseados em evidências</strong>.</p>
+      </div>
     </div>
 
-    <div class="cert-badge">
-      <div class="cert-label">Certificação Reconhecida</div>
-      <div class="cert-title">Curso de Capacitação</div>
-      <div class="cert-hours">130 HORAS</div>
-      <div class="cert-desc">Em parceria com instituição credenciada no MEC. Você recebe certificado oficial de extensão universitária ao concluir.</div>
+    <!-- Certificado -->
+    <div class="certificado">
+      <div class="certificado-doc">
+        <div class="cert-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+        <div class="cert-body">
+          <div class="cert-course-type">Certificação reconhecida pelo MEC</div>
+          <div class="cert-course-name">Curso de Extensão Universitária <em>·</em> Capacitação</div>
+          <div class="cert-course-sub">Você recebe certificado oficial ao concluir — emitido em parceria com instituição credenciada no MEC.</div>
+        </div>
+        <div class="cert-badge-pill">
+          <span class="cert-badge-num">130h</span>
+          <span class="cert-badge-label">carga<br>horária</span>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -2040,6 +2212,19 @@
       }
     }, { threshold: 0.1 });
     observer.observe(target);
+  })();
+
+  // Apresentação reveal animation
+  (function() {
+    var section = document.getElementById('apresentacaoReveal');
+    if (!section) return;
+    var obs = new IntersectionObserver(function(entries) {
+      if (entries[0].isIntersecting) {
+        section.closest('.section').classList.add('section-revealed');
+        obs.disconnect();
+      }
+    }, { threshold: 0.25 });
+    obs.observe(section);
   })();
 
   // Pain carousel
