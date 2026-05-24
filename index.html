@@ -599,6 +599,18 @@
   /* Texto lado direito */
   .apresentacao-text {}
 
+
+  /* Reveal genérico (logo + texto apresentação) */
+  .reveal-elem {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22,1,0.36,1);
+    transition-delay: inherit;
+  }
+  .section-revealed .reveal-elem {
+    opacity: 1;
+    transform: translateY(0);
+  }
   /* Reveal animado */
   .reveal-word {
     display: inline-block;
@@ -734,7 +746,7 @@
   /* ========== MÓDULOS ========== */
   .modules-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    grid-template-columns: 1fr 1fr;
     gap: 32px;
     margin-top: 32px;
   }
@@ -813,6 +825,148 @@
     transform: rotate(45deg);
   }
 
+
+  /* Módulos com foto lateral (desktop only) */
+  .module-card--with-photo {
+    display: grid;
+    grid-template-columns: 1fr 180px;
+    gap: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+  .module-card--photo-left {
+    grid-template-columns: 180px 1fr;
+  }
+  .module-content {
+    padding: 36px 28px;
+  }
+  .module-photo-slot {
+    position: relative;
+    overflow: hidden;
+    min-height: 360px;
+  }
+  .module-photo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    transition: transform 0.6s ease;
+  }
+  .module-card--with-photo:hover .module-photo-img {
+    transform: scale(1.04);
+  }
+  /* Fade lateral nas fotos */
+  .module-photo-slot--right::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(10,22,40,0.7) 0%, transparent 40%);
+    z-index: 1;
+    pointer-events: none;
+  }
+  .module-photo-slot--left::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(270deg, rgba(10,22,40,0.7) 0%, transparent 40%);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  /* Foto dos convidados */
+  .guest-photo-wrap {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .guest-photo-wrap::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 60px;
+    background: linear-gradient(to bottom, transparent, rgba(10,22,40,0.85));
+  }
+  .guest-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+  .guest:hover .guest-photo { transform: scale(1.04); }
+  .guest { overflow: hidden; }
+
+  /* Carrossel guests (mobile only) */
+  .guests-carousel { display: none; }
+  .guests-track { position: relative; }
+  .guest-slide {
+    opacity: 0;
+    transform: translateX(24px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    pointer-events: none;
+  }
+  .guest-slide.active {
+    opacity: 1;
+    transform: translateX(0);
+    position: relative;
+    pointer-events: auto;
+  }
+  .guest-slide.exit {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+  .guests-progress {
+    height: 2px;
+    background: var(--line);
+    margin-top: 16px;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .guests-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold-deep), var(--gold));
+    width: 0%;
+    transition: width linear;
+  }
+  .guests-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 14px;
+  }
+  .guests-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--line);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+  }
+  .guests-dot.active {
+    background: var(--gold);
+    transform: scale(1.4);
+  }
+
+  @media (max-width: 768px) {
+    .modules-grid { grid-template-columns: 1fr; }
+    .module-card--with-photo {
+      grid-template-columns: 1fr;
+    }
+    .module-photo-slot {
+      display: none;
+    }
+    .module-content { padding: 36px 28px; }
+    .guests--desktop { display: none; }
+    .guests-carousel { display: block; }
+    .guest-photo-wrap { height: 200px; }
+  }
   /* Card módulo extra (com convidados) */
   .module-card.extra {
     grid-column: 1 / -1;
@@ -850,6 +1004,14 @@
     border-left: 2px solid var(--gold);
   }
 
+
+  /* Faixa bege no header da seção de módulos */
+  .modules-header-band {
+    background: var(--paper);
+    padding: 56px 0 48px;
+    margin-bottom: 48px;
+  }
+  .modules-header-band .section-title em { color: var(--gold-deep); }
   /* ========== COMO FUNCIONA ========== */
   .features-list {
     max-width: 900px;
@@ -1813,7 +1975,7 @@
 
     <div class="apresentacao-grid">
       <!-- Logo GPS -->
-      <div class="gps-logo-wrap">
+      <div class="gps-logo-wrap reveal-elem" style="transition-delay:0s">
         <div class="gps-logo-frame">
           <div class="gps-logo-halo"></div>
           <span class="gps-logo-corner tl"></span>
@@ -1825,7 +1987,7 @@
       </div>
 
       <!-- Texto -->
-      <div class="apresentacao-text" id="apresentacaoReveal">
+      <div class="apresentacao-text reveal-elem" id="apresentacaoReveal" style="transition-delay:0.2s">
         <h2 class="apresentacao-title">
           <span class="reveal-word"><span>O&nbsp;</span></span><span class="reveal-word"><span><em>GPS</em>&nbsp;</span></span><span class="reveal-word"><span>foi&nbsp;</span></span><span class="reveal-word"><span>criado</span></span><br>
           <span class="reveal-word" style="transition-delay:0.08s"><span>exatamente&nbsp;</span></span><span class="reveal-word" style="transition-delay:0.14s"><span>para&nbsp;</span></span><span class="reveal-word" style="transition-delay:0.2s"><span>resolver</span></span><br>
@@ -1855,43 +2017,57 @@
 </section>
 
 <!-- ========== MÓDULOS ========== -->
-<section class="section section-dark" style="padding-top: 0;">
+<section class="section section-dark modules-section" style="padding-top: 0;">
+  <div class="modules-header-band">
+    <div class="container">
+      <div class="section-eyebrow" style="color:var(--gold-deep)">Conteúdo Programático</div>
+      <h2 class="section-title" style="color:var(--navy-deep)">O que você vai <em>aprender</em></h2>
+      <p class="section-sub" style="color:rgba(15,34,56,0.65)">Você dominará o diagnóstico e manejo dos principais transtornos encontrados na prática clínica.</p>
+    </div>
+  </div>
   <div class="container">
-    <div class="section-eyebrow">Conteúdo Programático</div>
-    <h2 class="section-title">O que você vai <em>aprender</em></h2>
-    <p class="section-sub">Você dominará o diagnóstico e manejo dos principais transtornos encontrados na prática clínica.</p>
 
     <div class="modules-grid">
       <!-- Módulo 1 -->
-      <div class="module-card">
-        <div class="module-num">Módulo I</div>
-        <h3 class="module-title">Os transtornos mais comuns na clínica</h3>
-        <ul class="module-list">
-          <li>Introdução ao GPS e Raciocínio Clínico</li>
-          <li>Transtorno Depressivo Maior</li>
-          <li>Transtorno de Ansiedade Generalizada</li>
-          <li>Transtorno Obsessivo-Compulsivo</li>
-          <li>Transtorno de Estresse Pós-Traumático</li>
-          <li>Transtorno Afetivo Bipolar</li>
-          <li>Transtorno de Pânico e Agorafobia</li>
-          <li>Transtorno de Ansiedade Social</li>
-        </ul>
+      <div class="module-card module-card--with-photo">
+        <div class="module-content">
+          <div class="module-num">Módulo I</div>
+          <h3 class="module-title">Os transtornos mais comuns na clínica</h3>
+          <ul class="module-list">
+            <li>Introdução ao GPS e Raciocínio Clínico</li>
+            <li>Transtorno Depressivo Maior</li>
+            <li>Transtorno de Ansiedade Generalizada</li>
+            <li>Transtorno Obsessivo-Compulsivo</li>
+            <li>Transtorno de Estresse Pós-Traumático</li>
+            <li>Transtorno Afetivo Bipolar</li>
+            <li>Transtorno de Pânico e Agorafobia</li>
+            <li>Transtorno de Ansiedade Social</li>
+          </ul>
+        </div>
+        <div class="module-photo-slot module-photo-slot--right">
+          <img src="2.png" alt="Módulo I" class="module-photo-img">
+        </div>
       </div>
 
       <!-- Módulo 2 -->
-      <div class="module-card">
-        <div class="module-num">Módulo II</div>
-        <h3 class="module-title">Transtornos de Personalidade</h3>
-        <ul class="module-list">
-          <li>Introdução aos Transtornos de Personalidade</li>
-          <li>Personalidade Antissocial</li>
-          <li>Personalidade Histriônica</li>
-          <li>Personalidade Obsessivo-Compulsiva</li>
-          <li>Personalidade Dependente</li>
-          <li>Personalidade Borderline</li>
-          <li>Personalidades Esquizotípica e Esquizoide</li>
-          <li>Personalidade Paranoide, Narcisista e Evitativa</li>
-        </ul>
+      <div class="module-card module-card--with-photo module-card--photo-left">
+        <div class="module-photo-slot module-photo-slot--left">
+          <img src="3.png" alt="Módulo II" class="module-photo-img">
+        </div>
+        <div class="module-content">
+          <div class="module-num">Módulo II</div>
+          <h3 class="module-title">Transtornos de Personalidade</h3>
+          <ul class="module-list">
+            <li>Introdução aos Transtornos de Personalidade</li>
+            <li>Personalidade Antissocial</li>
+            <li>Personalidade Histriônica</li>
+            <li>Personalidade Obsessivo-Compulsiva</li>
+            <li>Personalidade Dependente</li>
+            <li>Personalidade Borderline</li>
+            <li>Personalidades Esquizotípica e Esquizoide</li>
+            <li>Personalidade Paranoide, Narcisista e Evitativa</li>
+          </ul>
+        </div>
       </div>
 
       <!-- Módulo Extra -->
@@ -1899,25 +2075,64 @@
         <div class="module-num">Módulo Extra · Convidados</div>
         <h3 class="module-title">Aulas e mentorias com referências da área</h3>
 
-        <div class="guests">
+        <!-- Desktop: grid normal com foto -->
+        <div class="guests guests--desktop">
           <div class="guest">
+            <div class="guest-photo-wrap">
+              <img src="4.png" alt="Dr. Wilson Vieira Melo" class="guest-photo">
+            </div>
             <div class="guest-name">Dr. Wilson Vieira Melo</div>
             <div class="guest-credentials">Doutor em Psicologia (UFRGS / University of Virginia, EUA) · Presidente da FBTC (2019–2023)</div>
             <div class="guest-topic">Psicologia Baseada em Processos<br>Treino de Habilidades Sociais</div>
           </div>
           <div class="guest">
+            <div class="guest-photo-wrap">
+              <img src="5.png" alt="Dr. André Moreno" class="guest-photo">
+            </div>
             <div class="guest-name">Dr. André Moreno</div>
             <div class="guest-credentials">Doutor em Saúde Mental, Mestre em Psicologia. Especialista em TCC com formação em Terapia do Esquema</div>
             <div class="guest-topic">Mentoria: Como desenvolver outros produtos e serviços na clínica</div>
           </div>
           <div class="guest">
+            <div class="guest-photo-wrap">
+              <img src="6.png" alt="Prof. Julio Rafael" class="guest-photo">
+            </div>
             <div class="guest-name">Prof. Julio Rafael</div>
             <div class="guest-credentials">Especialista em TCC e Terapia do Esquema. Diretor do Voss · Especialista em Inclusão Escolar</div>
             <div class="guest-topic">Mentor principal do GPS<br>Condução de todos os módulos centrais</div>
           </div>
         </div>
+
+        <!-- Mobile: carrossel -->
+        <div class="guests-carousel">
+          <div class="guests-track">
+            <div class="guest-slide active">
+              <div class="guest-photo-wrap"><img src="4.png" alt="Dr. Wilson Vieira Melo" class="guest-photo"></div>
+              <div class="guest-name">Dr. Wilson Vieira Melo</div>
+              <div class="guest-credentials">Doutor em Psicologia (UFRGS / University of Virginia, EUA) · Presidente da FBTC (2019–2023)</div>
+              <div class="guest-topic">Psicologia Baseada em Processos · Treino de Habilidades Sociais</div>
+            </div>
+            <div class="guest-slide">
+              <div class="guest-photo-wrap"><img src="5.png" alt="Dr. André Moreno" class="guest-photo"></div>
+              <div class="guest-name">Dr. André Moreno</div>
+              <div class="guest-credentials">Doutor em Saúde Mental, Mestre em Psicologia. Especialista em TCC com formação em Terapia do Esquema</div>
+              <div class="guest-topic">Mentoria: Como desenvolver outros produtos e serviços na clínica</div>
+            </div>
+            <div class="guest-slide">
+              <div class="guest-photo-wrap"><img src="6.png" alt="Prof. Julio Rafael" class="guest-photo"></div>
+              <div class="guest-name">Prof. Julio Rafael</div>
+              <div class="guest-credentials">Especialista em TCC e Terapia do Esquema. Diretor do Voss · Especialista em Inclusão Escolar</div>
+              <div class="guest-topic">Mentor principal do GPS · Condução de todos os módulos centrais</div>
+            </div>
+          </div>
+          <div class="guests-progress"><div class="guests-progress-bar" id="guestsProgress"></div></div>
+          <div class="guests-dots">
+            <button class="guests-dot active" data-gidx="0"></button>
+            <button class="guests-dot" data-gidx="1"></button>
+            <button class="guests-dot" data-gidx="2"></button>
+          </div>
+        </div>
       </div>
-    </div>
   </div>
 </section>
 
@@ -2214,7 +2429,7 @@
     observer.observe(target);
   })();
 
-  // Apresentação reveal animation
+  // Apresentação reveal animation (logo + texto)
   (function() {
     var section = document.getElementById('apresentacaoReveal');
     if (!section) return;
@@ -2223,8 +2438,55 @@
         section.closest('.section').classList.add('section-revealed');
         obs.disconnect();
       }
-    }, { threshold: 0.25 });
+    }, { threshold: 0.15 });
     obs.observe(section);
+  })();
+
+  // Guests carousel (mobile)
+  (function() {
+    var slides = document.querySelectorAll('.guest-slide');
+    var dots   = document.querySelectorAll('.guests-dot');
+    var bar    = document.getElementById('guestsProgress');
+    if (!slides.length || !bar) return;
+    var current = 0;
+    var total = slides.length;
+    var interval = 3000;
+    var timer;
+
+    function goTo(idx) {
+      slides[current].classList.remove('active');
+      slides[current].classList.add('exit');
+      setTimeout(function() { slides[current].classList.remove('exit'); }, 500);
+      dots[current].classList.remove('active');
+      current = idx;
+      slides[current].classList.add('active');
+      dots[current].classList.add('active');
+      startBar();
+    }
+    function next() { goTo((current + 1) % total); }
+    function startBar() {
+      bar.style.transition = 'none';
+      bar.style.width = '0%';
+      requestAnimationFrame(function() {
+        requestAnimationFrame(function() {
+          bar.style.transition = 'width ' + interval + 'ms linear';
+          bar.style.width = '100%';
+        });
+      });
+    }
+    function startAuto() {
+      clearInterval(timer);
+      timer = setInterval(next, interval);
+    }
+    dots.forEach(function(dot) {
+      dot.addEventListener('click', function() {
+        clearInterval(timer);
+        goTo(parseInt(dot.getAttribute('data-gidx')));
+        startAuto();
+      });
+    });
+    startBar();
+    startAuto();
   })();
 
   // Pain carousel
