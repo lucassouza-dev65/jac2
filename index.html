@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GPS — Guia do Psicólogo Seguro | Formação Clínica em Psicoterapia</title>
+<title>GPS — Guia do Psicólogo Seguro | Extensão Universitária em Psicoterapia</title>
 <meta name="description" content="Domine o diagnóstico e o manejo clínico dos transtornos que aparecem na prática diária. Curso de extensão universitária de 130 horas com certificado MEC.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -739,9 +739,9 @@
       gap: 40px;
       margin-top: 40px;
     }
-    .gps-logo-frame { width: 220px; height: 220px; }
-    .gps-logo-img { width: 170px; height: 170px; }
-
+    /* Logo fluido: cresce proporcionalmente com a tela (min 200px, max 260px) */
+    .gps-logo-frame { width: clamp(200px, 55vw, 260px); height: clamp(200px, 55vw, 260px); }
+    .gps-logo-img   { width: clamp(155px, 42vw, 200px); height: clamp(155px, 42vw, 200px); }
   }
 
   /* ========== MÓDULOS ========== */
@@ -878,11 +878,11 @@
   /* Foto dos convidados */
   .guest-photo-wrap {
     width: 100%;
-    height: 220px;
+    height: clamp(180px, 28vw, 260px); /* fluido: se adapta a qualquer largura de tela */
     overflow: hidden;
     margin-bottom: 16px;
     position: relative;
-    flex-shrink: 0; /* impede que o wrap encolha */
+    flex-shrink: 0;
   }
   .guest-photo-wrap::after {
     content: '';
@@ -970,7 +970,7 @@
     .module-content { padding: 36px 28px; }
     .guests--desktop { display: none !important; }
     .guests-carousel { display: block; }
-    .guest-photo-wrap { height: 200px; flex-shrink: 0; overflow: hidden; }
+    .guest-photo-wrap { height: clamp(180px, 52vw, 240px); flex-shrink: 0; overflow: hidden; }
   }
   /* Card módulo extra (com convidados) */
   .module-card.extra {
@@ -979,9 +979,13 @@
   }
   .guests {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 40px;
     margin-top: 32px;
+  }
+  /* Julio Rafael: 4º card centralizado na segunda linha */
+  .guests .guest:last-child {
+    grid-column: 2 / 3;
   }
   .guest {
     padding-left: 24px;
@@ -2157,6 +2161,16 @@
     .hero-sub { font-size: 15px; }
     .hero-photo-mobile-img { height: 310px; }
   }
+
+  /* ── Telas grandes de mobile: iPhone 15 Pro Max (430px), Plus, etc. ── */
+  @media (min-width: 401px) and (max-width: 767px) {
+    .hero-title { font-size: clamp(30px, 7.5vw, 38px); }
+    .hero-sub   { font-size: clamp(16px, 3.8vw, 18px); }
+    .hero-photo-mobile-img { height: clamp(340px, 85vw, 420px); }
+    .section-title { font-size: clamp(26px, 6vw, 34px); }
+    .section-sub   { font-size: clamp(15px, 3.5vw, 17px); }
+    .guests-track  { height: clamp(480px, 120vw, 580px); }
+  }
 </style>
 </head>
 <body>
@@ -2217,7 +2231,7 @@
           <img src="1.png" alt="Prof. Julio Rafael" class="hero-photo-mobile-img">
         </div>
 
-        <div class="hero-eyebrow">Formação · 130h · Certificado MEC</div>
+        <div class="hero-eyebrow">Extensão Universitária · 130h · Certificado MEC</div>
 
         <a href="#oferta" class="btn">
           <span>Quero me sentir seguro na clínica</span>
@@ -2378,7 +2392,7 @@
         <div class="cert-body">
           <div class="cert-course-type">Certificação reconhecida pelo MEC</div>
           <div class="cert-course-name">Curso de Extensão Universitária <em>·</em> Capacitação</div>
-          <div class="cert-course-sub">Você recebe certificado oficial ao concluir — emitido em parceria com instituição credenciada no MEC.</div>
+          <div class="cert-course-sub">Você recebe certificado oficial ao concluir — emitido em parceria com a <strong>FEX Educação</strong>.</div>
         </div>
         <div class="cert-badge-pill">
           <span class="cert-badge-num">130h</span>
@@ -2438,7 +2452,9 @@
             <li>Personalidade Dependente</li>
             <li>Personalidade Borderline</li>
             <li>Personalidades Esquizotípica e Esquizoide</li>
-            <li>Personalidade Paranoide, Narcisista e Evitativa</li>
+            <li>Personalidade Paranoide</li>
+            <li>Personalidade Narcisista</li>
+            <li>Personalidade Evitativa</li>
           </ul>
         </div>
       </div>
@@ -2446,7 +2462,7 @@
       <!-- Módulo Extra -->
       <div class="module-card extra">
         <div class="module-num">Módulo Extra · Convidados</div>
-        <h3 class="module-title">Aulas e mentorias com referências da área</h3>
+        <h3 class="module-title">Aulas com referências da área</h3>
 
         <!-- Desktop: grid normal com foto -->
         <div class="guests guests--desktop">
@@ -2465,6 +2481,14 @@
             <div class="guest-name">Dr. André Moreno</div>
             <div class="guest-credentials">Doutor em Saúde Mental, Mestre em Psicologia. Especialista em TCC com formação em Terapia do Esquema</div>
             <div class="guest-topic">Mentoria: Como desenvolver outros produtos e serviços na clínica</div>
+          </div>
+          <div class="guest">
+            <div class="guest-photo-wrap">
+              <img src="15.png" alt="Profa. Marjory Lugli Suplicy" class="guest-photo">
+            </div>
+            <div class="guest-name">Profa. Marjory Lugli Suplicy</div>
+            <div class="guest-credentials">Psicóloga especialista em TCC e Terapia do Esquema (CETCC) · Professora, supervisora e membro da Associação Brasileira de Terapia do Esquema</div>
+            <div class="guest-topic">Intervenções com Modos Esquemáticos</div>
           </div>
           <div class="guest">
             <div class="guest-photo-wrap">
@@ -2492,6 +2516,12 @@
               <div class="guest-topic">Mentoria: Como desenvolver outros produtos e serviços na clínica</div>
             </div>
             <div class="guest-slide">
+              <div class="guest-photo-wrap"><img src="15.png" alt="Profa. Marjory Lugli Suplicy" class="guest-photo"></div>
+              <div class="guest-name">Profa. Marjory Lugli Suplicy</div>
+              <div class="guest-credentials">Psicóloga especialista em TCC e Terapia do Esquema (CETCC) · Professora, supervisora e membro da Associação Brasileira de Terapia do Esquema</div>
+              <div class="guest-topic">Intervenções com Modos Esquemáticos</div>
+            </div>
+            <div class="guest-slide">
               <div class="guest-photo-wrap"><img src="6.png" alt="Prof. Julio Rafael" class="guest-photo"></div>
               <div class="guest-name">Prof. Julio Rafael</div>
               <div class="guest-credentials">Especialista em TCC e Terapia do Esquema. Diretor do Voss · Especialista em Inclusão Escolar</div>
@@ -2503,6 +2533,7 @@
             <button class="guests-dot active" data-gidx="0"></button>
             <button class="guests-dot" data-gidx="1"></button>
             <button class="guests-dot" data-gidx="2"></button>
+            <button class="guests-dot" data-gidx="3"></button>
           </div>
         </div>
       </div>
@@ -2789,7 +2820,7 @@
       <!-- Coluna esquerda: título + features -->
       <div class="offer-left">
         <div class="offer-eyebrow">Acesso Completo</div>
-        <h3 class="offer-title">Formação GPS<br><em>Guia do Psicólogo Seguro</em></h3>
+        <h3 class="offer-title">Curso GPS<br><em>Guia do Psicólogo Seguro</em></h3>
 
         <div class="offer-features">
           <div class="offer-feature"><i class="fa-solid fa-check"></i><span>Protocolos atualizados para tratamento dos transtornos</span></div>
