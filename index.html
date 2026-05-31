@@ -990,6 +990,8 @@
   .guest {
     padding-left: 24px;
     border-left: 1px solid var(--line-strong);
+    display: flex;
+    flex-direction: column;
   }
   .guest-name {
     font-family: 'Cormorant Garamond', serif;
@@ -1004,6 +1006,7 @@
     font-style: italic;
     margin-bottom: 16px;
     line-height: 1.5;
+    flex: 1; /* empurra o tópico para baixo, alinhando todos na mesma altura */
   }
   .guest-topic {
     font-size: 14px;
@@ -1011,6 +1014,7 @@
     padding: 12px 16px;
     background: rgba(201, 163, 92, 0.06);
     border-left: 2px solid var(--gold);
+    margin-top: auto;
   }
 
 
@@ -2480,7 +2484,7 @@
             </div>
             <div class="guest-name">Dr. André Moreno</div>
             <div class="guest-credentials">Doutor em Saúde Mental, Mestre em Psicologia. Especialista em TCC com formação em Terapia do Esquema</div>
-            <div class="guest-topic">Mentoria: Como desenvolver outros produtos e serviços na clínica</div>
+            <div class="guest-topic">Como desenvolver outros produtos e serviços na clínica</div>
           </div>
           <div class="guest">
             <div class="guest-photo-wrap">
@@ -2513,7 +2517,7 @@
               <div class="guest-photo-wrap"><img src="5.png" alt="Dr. André Moreno" class="guest-photo"></div>
               <div class="guest-name">Dr. André Moreno</div>
               <div class="guest-credentials">Doutor em Saúde Mental, Mestre em Psicologia. Especialista em TCC com formação em Terapia do Esquema</div>
-              <div class="guest-topic">Mentoria: Como desenvolver outros produtos e serviços na clínica</div>
+              <div class="guest-topic">Como desenvolver outros produtos e serviços na clínica</div>
             </div>
             <div class="guest-slide">
               <div class="guest-photo-wrap"><img src="15.png" alt="Profa. Marjory Lugli Suplicy" class="guest-photo"></div>
